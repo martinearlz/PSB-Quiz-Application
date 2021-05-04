@@ -1,0 +1,88 @@
+{
+    "question": [
+        "Q1. What is technology will be used for project?",
+        "Q2. Which methodology is the most traditional software development method?",
+        "Q3. Which methodology is applicable to any project with aggressive deadline, complex requirements and a degree of uniqueness?",
+        "Q4. Which development process that relies on the repetition of a very short development cycle, and testing?",
+        "Q5. Which diagram shows the relationship between the user and the different use cases in which the use is involved?",
+        "Q6. When we need to quickly release software, which methodology we need to choose?",
+        "Q7. In scrum methodology, who define what the product releases?",
+        "Q8. When we want to decryption the fie, what state do we need to turn the data into?",
+        "Q9. Which tools is let the process of breaking down project deliverables into smaller, more manageable components?",
+        "Q10.What connects software and hardware?"
+    ],
+    "answer": [
+        1,
+        1,
+        2,
+        4,
+        2,
+        1,
+        1,
+        1,
+        3,
+        2
+    ],
+    "options": [
+        [
+            "Kanban",
+            "Kanban board",
+            "Gantt chart",
+            "Bar chart"
+        ],
+        [
+            "Waterfall methodology",
+            "Scrum methodology",
+            "Agile methodology",
+            "RUP methodology"
+        ],
+        [
+            "Waterfall methodology",
+            "Scrum methodology",
+            "Agile methodology",
+            "RUP methodology"
+        ],
+        [
+            "Agile methodology",
+            "Behavior-driven development and business process management",
+            "Lightweight methodology",
+            "Test Driven Development"
+        ],
+        [
+            "Class diagram",
+            "Use case diagram",
+            "Gantt chart",
+            "Bar chart"
+        ],
+        [
+            "Rad methodology",
+            "Silk methodology",
+            "Scrum methodology",
+            "V methodology"
+        ],
+        [
+            "Scrum master",
+            "Product owner",
+            "Development team",
+            "No one"
+        ],
+        [
+            "Origin",
+            "Encryption",
+            "Read-only",
+            "Hide"
+        ],
+        [
+            "Gantt chart",
+            "Kanban board",
+            "WBS",
+            "Bar chart"
+        ],
+        [
+            "database",
+            "operation system",
+            "kernel",
+            "code"
+        ]
+    ]
+}
