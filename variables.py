@@ -1,4 +1,5 @@
 """This script stores global variables."""
+import json
 
 
 class Variables:
@@ -17,3 +18,6 @@ class Variables:
         if len(self.users) == 0:
             self.load_users()
         return self.users
+
+
+
