@@ -1,9 +1,13 @@
 """This script stores global variables."""
+import json
 
 
 class Variables:
     def __init__(self):
         self.users = {}
+        self.questions = ()
+        self.options = ()
+        self.answers = ()
 
     def load_users(self):
         with open("users.txt") as users:
@@ -17,3 +21,25 @@ class Variables:
         if len(self.users) == 0:
             self.load_users()
         return self.users
+
+    def load_quiz(self):
+        with open('quiz.json') as quiz:
+            data = json.load(quiz)
+        self.questions = (data['question'])
+        self.options = (data['options'])
+        self.answers = (data['answer'])
+
+    def get_questions(self):
+        if len(self.questions) == 0:
+            self.load_quiz()
+        return self.questions
+
+    def get_options(self):
+        if len(self.options) == 0:
+            self.load_quiz()
+        return self.options
+
+    def get_answers(self):
+        if len(self.answers) == 0:
+            self.load_quiz()
+        return self.answers
