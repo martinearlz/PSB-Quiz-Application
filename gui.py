@@ -125,14 +125,8 @@ class QuestionPage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, background='#009688')
-        self.current_question = 0
-        self.opt_selected = tk.IntVar()
-        self.opts = self.radio_buttons()
         self.controller = controller
-        # Render questions, options, and answers.
-        self.display_question()
-        self.display_options()
-        self.buttons()
+        self.initialize()
 
     def display_result(self):
         correct_answers, wrong_answers, score = quiz.get_results()
@@ -146,7 +140,6 @@ class QuestionPage(tk.Frame):
         # Shows a message box to display the result
         messagebox.showinfo("Result", f"{result}\n{correct}\n{wrong}")
 
-        # This method checks the Answer after we click on Next.
     def next_btn(self):
         answer = self.opt_selected.get()
         quiz.mark_answer(answer, self.current_question)
@@ -168,18 +161,18 @@ class QuestionPage(tk.Frame):
     def buttons(self):
         # The first button is the Next button to move to the
         # next Question
-        next_button = ttk.Button(self, text="Next", command=self.next_btn,
-                                 width=5, style='flat.TButton')
+        self.next_button = ttk.Button(self, text="Next", command=self.next_btn,
+                                      width=5, style='flat.TButton')
 
         # palcing the button  on the screen
-        next_button.place(relx=0.48, y=270)
+        self.next_button.place(relx=0.48, y=270)
 
         # This is the second button which is used to Quit the GUI
-        quit_button = ttk.Button(self, text="Quit", command=self.return_to_dashboard,
-                                 width=5, style='flat.TButton')
+        self.quit_button = ttk.Button(self, text="Quit", command=self.return_to_dashboard,
+                                      width=5, style='flat.TButton')
 
         # placing the Quit button on the screen
-        quit_button.place(relx=0.88, y=270)
+        self.quit_button.place(relx=0.88, y=270)
         # This method deselect the radio button on the screen
         # Then it is used to display the options available for the current
         # question which we obtain through the question number and Updates
@@ -192,10 +185,10 @@ class QuestionPage(tk.Frame):
 
     def display_question(self):
         # setting the Question properties
-        q_no = ttk.Label(self, text=quiz.get_current_question(self.current_question), font=("Arial", 18), width=100,
-                         style='flat.TButton', anchor='w')
+        self.q_no = ttk.Label(self, text=quiz.get_current_question(self.current_question), font=("Arial", 18), width=100,
+                              style='flat.TButton', anchor='w')
         # placing the option on the screen
-        q_no.place(x=70, y=100)
+        self.q_no.place(x=70, y=100)
 
     def radio_buttons(self):
         # initialize the list with an empty list of options
@@ -217,8 +210,31 @@ class QuestionPage(tk.Frame):
         # return the radio buttons
         return option_list
 
+    def initialize(self):
+        # Then reinitialize them.
+        self.current_question = 0
+        self.opt_selected = tk.IntVar()
+        self.opts = self.radio_buttons()
+        self.display_question()
+        self.display_options()
+        self.buttons()
+        quiz.reset_answers()
+
+    def destroy(self):
+        # Reset and destroy all widgets.
+        for i in self.opts:
+            i.destroy()
+        self.opts = []
+        self.q_no.destroy()
+        self.next_button.destroy()
+        self.quit_button.destroy()
+
     def return_to_dashboard(self):
+        # When the user wants to returns to the dashboard (quit/ended quiz),
+        # destroy all widgets and reinitialize them again.
+        # Then redirect them to the Dashboard page.
         self.destroy()
+        self.initialize()
         self.controller.show_frame(Dashboard)
 
 

@@ -92,3 +92,6 @@ class Quiz:
         - question (str) : The question.
         '''
         return self.questions[q_no]
+
+    def reset_answers(self):
+        self.correct_answers = 0
