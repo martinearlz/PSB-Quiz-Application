@@ -4,11 +4,9 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from logic import Logic, Quiz
-import json
 
 logic = Logic()
 quiz = Quiz()
-
 
 class MainController(tk.Tk):
     """
@@ -141,6 +139,9 @@ class QuestionPage(tk.Frame):
         messagebox.showinfo("Result", f"{result}\n{correct}\n{wrong}")
 
     def next_btn(self):
+        # When the next button is clicked, destroy/remove the previous question to prevent overlapping.
+        self.q_no.destroy()
+
         answer = self.opt_selected.get()
         quiz.mark_answer(answer, self.current_question)
 
@@ -173,10 +174,6 @@ class QuestionPage(tk.Frame):
 
         # placing the Quit button on the screen
         self.quit_button.place(relx=0.88, y=270)
-        # This method deselect the radio button on the screen
-        # Then it is used to display the options available for the current
-        # question which we obtain through the question number and Updates
-        # each of the options for the current question of the radio button.
 
     def display_options(self):
         # deselecting the options
@@ -185,8 +182,8 @@ class QuestionPage(tk.Frame):
 
     def display_question(self):
         # setting the Question properties
-        self.q_no = ttk.Label(self, text=quiz.get_current_question(self.current_question), font=("Arial", 18), width=100,
-                              style='flat.TButton', anchor='w')
+        self.q_no = ttk.Label(self, text=quiz.get_current_question(
+            self.current_question), font=("Arial", 18), style='flat.TButton', anchor='w')
         # placing the option on the screen
         self.q_no.place(x=70, y=100)
 
