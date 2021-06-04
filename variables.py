@@ -1,5 +1,7 @@
 """This script stores global variables."""
 import json
+import os
+root_dir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Variables:
@@ -10,7 +12,7 @@ class Variables:
         self.answers = ()
 
     def load_users(self):
-        with open("users.txt") as users:
+        with open(root_dir+"/databases/users.txt") as users:
             for user in users:
                 (username, password) = user.split()
                 self.users[username] = password
@@ -23,11 +25,11 @@ class Variables:
         return self.users
 
     def load_quiz(self):
-        with open('quiz.json') as quiz:
+        with open(root_dir+"/databases/quiz.json") as quiz:
             data = json.load(quiz)
-        self.questions = (data['question'])
-        self.options = (data['options'])
-        self.answers = (data['answer'])
+        self.questions = data['question']
+        self.options = data['options']
+        self.answers = data['answer']
 
     def get_questions(self):
         if len(self.questions) == 0:

@@ -93,5 +93,8 @@ class Quiz:
         '''
         return self.questions[q_no]
 
+    def get_correct_answers(self):
+        return self.correct_answers
+
     def reset_answers(self):
         self.correct_answers = 0
