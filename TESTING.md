@@ -5,6 +5,13 @@
 
 2. Put some test logic into it, take test_logic.py for reference, with proper Gherkin format and assets.
 
-3. `cd` to the `tests` folder.
+3. Go to .github/workflows, open test.yml
 
-4. Run `pytest -vv` to run all the tests. Make sure you install `pytest` beforehand, using `pip install -U pytest`.
+4. Include the new test to be executed, e.g:
+`- name: Decision recommender unit testing
+   run: pytest -v tests/test_quiz.py`
+
+## Running Tests
+1. `cd` to the `tests` folder.
+
+2. Run `pytest -vv` to run all the tests. Make sure you install `pytest` beforehand, using `pip install -U pytest`.
