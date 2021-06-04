@@ -5,4 +5,6 @@
 
 2. Put some test logic into it, take test_logic.py for reference, with proper Gherkin format and assets.
 
-3. Run `pytest -vv` to run all the tests. Make sure you install `pytest` beforehand, using `pip install -U pytest`.
+3. `cd` to the `tests` folder.
+
+4. Run `pytest -vv` to run all the tests. Make sure you install `pytest` beforehand, using `pip install -U pytest`.
