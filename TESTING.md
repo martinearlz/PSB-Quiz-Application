@@ -9,7 +9,6 @@
 
 4. Include the new test to be executed, e.g:
 `- name: Quiz testing unit testing
-
    run: pytest -v tests/test_quiz.py`
 
 ## Running Tests
