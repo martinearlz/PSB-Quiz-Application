@@ -24,17 +24,6 @@ class MainController(tk.Tk):
         self.frame_containers.pack(side="top", fill="both", expand=True)
         self.frame_containers.grid_rowconfigure(0, weight=1)
         self.frame_containers.grid_columnconfigure(0, weight=1)
-
-        # Custom TKinter styling.
-        self.style = ttk.Style(self)
-        self.style.theme_use('clam')
-        self.style.configure(
-            'flat.TButton', borderwidth=0, background='#038579', foreground="#ffffff")
-        self.style.map('flat.TButton',
-                       foreground=[('disabled', 'yellow'),
-                                   ('pressed', '#a4a6a5'),
-                                   ('active', '#e3e8e6')],
-                       background=[('active', '#0e5e34')])
         
         self.frames = {}
         self.initialize_frames()
@@ -58,31 +47,28 @@ class Login(tk.Frame):
     """
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent, background='#009688')
+        tk.Frame.__init__(self, parent)
         self.controller = controller
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)
 
         # The big title in front with y paddings of 20 and x paddings of 50
-        program_title = tk.Label(self, text="PSB Quiz", font="Arial 50", background='#009688',
-                                 foreground="#fff")
+        program_title = tk.Label(self, text="PSB Quiz", font="Arial 50")
         program_title.place(relx=0.5, rely=0.4, anchor="center")
 
         # Login form inputs.
-        username_input = ttk.Entry(self, width=30, style="flat.TButton")
+        username_input = ttk.Entry(self)
         username_input.place(relx=0.5, rely=0.5, anchor="center")
         username_input.insert(0, "Username")
 
-        password_input = ttk.Entry(self, width=30, style="flat.TButton")
+        password_input = ttk.Entry(self)
         password_input.place(relx=0.5, rely=0.56, anchor="center")
         password_input.insert(0, "Password")
 
         # Login button, which then triggers the private login method.
         login_btn = ttk.Button(self, text="Log in",
                                command=lambda: self.__login(
-                                   username_input.get(), password_input.get()),
-                               style='flat.TButton',
-                               width=30)
+                                   username_input.get(), password_input.get()))
         login_btn.place(relx=0.5, rely=0.63, anchor="center")
 
     def __login(self, username, password):
@@ -101,13 +87,12 @@ class Dashboard(tk.Frame):
     """
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent, background='#009688')
+        tk.Frame.__init__(self, parent)
         self.controller = controller
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)
 
-        program_title = tk.Label(self, text="Dashboard", font="Arial 30", background='#009688',
-                                 foreground="#fff")
+        program_title = tk.Label(self, text="Dashboard", font="Arial 30")
         program_title.pack(pady=35, padx=10)
 
         start_btn = ttk.Button(self, text="Start Quiz",
@@ -121,7 +106,7 @@ class QuestionPage(tk.Frame):
     """
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent, background='#009688')
+        tk.Frame.__init__(self, parent)
         self.controller = controller
         self.initialize()
 
@@ -162,14 +147,14 @@ class QuestionPage(tk.Frame):
         # The first button is the Next button to move to the
         # next Question
         self.next_button = ttk.Button(self, text="Next", command=self.next_btn,
-                                      width=5, style='flat.TButton')
+                                      width=5)
 
         # palcing the button  on the screen
         self.next_button.place(relx=0.48, y=270)
 
         # This is the second button which is used to Quit the GUI
         self.quit_button = ttk.Button(self, text="Quit", command=self.show_dashboard,
-                                      width=5, style='flat.TButton')
+                                      width=5)
 
         # placing the Quit button on the screen
         self.quit_button.place(relx=0.88, y=270)
@@ -200,7 +185,7 @@ class QuestionPage(tk.Frame):
     def display_question(self):
         # setting the Question properties
         self.q_no = ttk.Label(self, text=quiz.get_current_question(
-            self.current_question), font=("Arial", 18), style='flat.TButton', anchor='w')
+            self.current_question), font=("Arial", 18), anchor='w')
         # placing the option on the screen
         self.q_no.place(x=70, y=100)
 
@@ -250,40 +235,34 @@ class Results(tk.Frame):
     """
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent, background='#009688')
+        tk.Frame.__init__(self, parent)
         self.controller = controller
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)
         
-        self.program_title = tk.Label(self, text="Quiz Results", font="Arial 30", background='#009688',
-                                 foreground="#fff")
+        self.program_title = tk.Label(self, text="Quiz Results", font="Arial 30")
         self.program_title.place(relx=0.5, rely=0.2, anchor="center")
         self.show_score()
         self.show_misc()
     
     def show_score(self):
-        self.label = tk.Label(self, text="You got:", font="Arial 20", background='#009688',
-                                 foreground="#fff")
-        self.label.place(relx=0.5, rely=0.3, anchor="center")
-        
         score = quiz.get_results()[2]
         
-        self.score_label = tk.Label(self, text=f"🎉{score}%", font="Arial 34 bold", background='#009688', foreground="#fff")
+        self.score_label = tk.Label(self, text=f"{score}%", font="Arial 34 bold")
         self.score_label.place(relx=0.5, rely=0.4, anchor="center")
         
     def show_misc(self):
         # Shows other miscellaneous stuff such as buttons and labels.
-        self.retake_btn = ttk.Button(self, text="Retake Quiz", command=lambda: self.show_frame(QuestionPage), style='flat.TButton')
+        self.retake_btn = ttk.Button(self, text="Retake Quiz", command=lambda: self.show_frame(QuestionPage))
         self.retake_btn.place(relx=0.8, rely=0.65)
         
-        self.dashboard_btn = ttk.Button(self, text="Finish", command=lambda: self.show_frame(Dashboard), style='flat.TButton')
-        self.dashboard_btn.place(relx=0.8, rely=0.71)
+        self.dashboard_btn = ttk.Button(self, text="Finish", command=lambda: self.show_frame(Dashboard))
+        self.dashboard_btn.place(relx=0.9, rely=0.65)
         
-        self.question_answer_label = tk.Label(self, text=f"Accurate Answers", font="Arial 20", background='#009688',
-                                 foreground="#fff")
+        self.question_answer_label = tk.Label(self, text=f"Accurate Answers", font="Arial 20")
         self.question_answer_label.place(relx=0.05, rely=0.6)
         
-        self.question_answer_list = tk.Listbox(self, width=90)
+        self.question_answer_list = tk.Listbox(self)
         for index, questions in enumerate(quiz.get_questions()):
             self.question_answer_list.insert(index, f"{questions} : {quiz.get_answers()[index]}")
         self.question_answer_list.place(relx=0.05, rely=0.65)
@@ -295,7 +274,6 @@ class Results(tk.Frame):
     def destroy(self):
         quiz.reset_answers()
         self.program_title.destroy()
-        self.label.destroy()
         self.score_label.destroy()
         self.retake_btn.destroy()
         self.dashboard_btn.destroy()
