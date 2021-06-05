@@ -14,7 +14,6 @@ def test_mark_correct_answer():
     * When: I click the correct answer for a specific question.
     * And: My previous number of correct answers is 0.
     * Then: The number of correct answers that I have should be 1.
-    * But: It should not be any other number than 1.
     '''
     quiz = logic.Quiz()
     # Answers question 1 with the first option.
@@ -48,9 +47,6 @@ def test_get_all_correct_results():
     * When: I click on the correct answers for all of the questions displayed.
     * And: My previous score is 0, my wrong answers 0, and number of correct answers is 0.
     * Then: The number of correct answers that I have should be 10, the number of wrong answers 0, and the score 100.
-    * But: The score should not be any other number than 100, 
-    the correct answers should not be any other number than 10, 
-    and the wrong answers should not be any other number than 0.
     '''
     quiz = logic.Quiz()
     # Answer all questions with correct answers.
@@ -79,9 +75,6 @@ def test_get_all_wrong_results():
     * When: I click on the wrong answers for all of the questions displayed.
     * And: My previous score is 0, my wrong answers 0, and number of correct answers is 0.
     * Then: The number of correct answers that I have should still be 0, the number of wrong answers 10, and the score 0.
-    * But: The score should not be any other number than 0, 
-    the correct answers should not be any other number than 0, 
-    and the wrong answers should not be any other number than 10.
     '''
     quiz = logic.Quiz()
     # Answer all questions with incorrect answers.
