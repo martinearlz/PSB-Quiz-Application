@@ -5,6 +5,9 @@ variables = Variables()
 
 
 class Logic:
+    def __init__(self):
+        self.username = ""
+        
     def login(self, username, password):
         # Load the users dictionary,
         users = variables.get_users()
@@ -13,7 +16,13 @@ class Logic:
             return False
         # Else, if the username is in the dictionary, just
         # check whether the value is the same as the password enter.
-        return users[username] == password
+        if users[username] == password:
+            self.username = username
+            return True
+        return False
+    
+    def get_current_user_name(self):
+        return self.username
         
 
 class Quiz:
@@ -22,6 +31,8 @@ class Quiz:
         self.answers = variables.get_answers()
         self.questions = variables.get_questions()
         self.options = variables.get_options()
+        self.has_initialized = False
+        self.answer_map = {1 : "A", 2 : "B", 3 : "C", 4 : "D"}
 
     def mark_answer(self, answer, q_no):
         '''
@@ -79,7 +90,7 @@ class Quiz:
         - none
         '''
         for val, option in enumerate(self.options[q_no]):
-            opts[val]['text'] = option
+            opts[val]['text'] = f"{self.answer_map[val+1]}. {option}"
 
     def get_current_question(self, q_no):
         '''
@@ -103,6 +114,5 @@ class Quiz:
         return self.questions
     
     def get_answers(self):
-        answer_map = {1 : "A", 2 : "B", 3 : "C", 4 : "D"}
-        answers = list(map(lambda x: answer_map[x], self.answers))
+        answers = list(map(lambda x: self.answer_map[x], self.answers))
         return answers
