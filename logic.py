@@ -14,7 +14,7 @@ class Logic:
         # Else, if the username is in the dictionary, just
         # check whether the value is the same as the password enter.
         return users[username] == password
-
+        
 
 class Quiz:
     def __init__(self):
@@ -98,3 +98,11 @@ class Quiz:
 
     def reset_answers(self):
         self.correct_answers = 0
+    
+    def get_questions(self):
+        return self.questions
+    
+    def get_answers(self):
+        answer_map = {1 : "A", 2 : "B", 3 : "C", 4 : "D"}
+        answers = list(map(lambda x: answer_map[x], self.answers))
+        return answers
