@@ -21,6 +21,7 @@ class MainController(tk.Tk):
         # Initialize a class that inherits the Tk module.
         tk.Tk.__init__(self, *args, **kwargs)
         self.geometry("2000x2000")
+
         # Create a frame container that'll be used to show
         # Multiple frames (pages) that is going to be used for the program.
         self.frame_containers = tk.Frame(self)
@@ -64,16 +65,14 @@ class Login(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, background='#ffffff')
         self.controller = controller
-        self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(0, weight=1)
 
-        # The big title in front with y paddings of 20 and x paddings of 50
-        self.program_title = tk.Label(
-            self, text="PSB", font="Inter 60 bold", foreground="#B20437", background='#ffffff')
+        self.program_title = tk.Text(
+            self, font="Inter 60 bold", background='#ffffff', bd=0, borderwidth=0, selectborderwidth=0, highlightthickness=0)
+        self.program_title.insert("insert", "PSB Quiz")
+        self.program_title.configure(state='disabled')
         self.program_title.place(relx=0.39, rely=0.35)
-        self.program_title_2 = tk.Label(
-            self, text="Quiz", font="Inter 60 bold", background='#ffffff')
-        self.program_title_2.place(relx=0.49, rely=0.35)
+        self.program_title.tag_add("here", "1.0", "1.3")
+        self.program_title.tag_config("here", foreground="#B20437")
 
         # Login form inputs.
         self.username_input = ttk.Entry(
@@ -103,20 +102,22 @@ class Login(tk.Frame):
         if quiz.has_initialized:
             return
         
+        screen_width = self.controller.winfo_screenwidth()
+        
         top_wave = Image.open("images/top_wave.png")
-        top_wave = top_wave.resize((1280, 170), Image.ANTIALIAS)
+        top_wave = top_wave.resize((screen_width, 170), Image.ANTIALIAS)
         top_wave = ImageTk.PhotoImage(top_wave)
         self.top_wave_img = tk.Label(image=top_wave, background='#ffffff')
         self.top_wave_img.image = top_wave
-        self.top_wave_img.place(x=-3, y=-3)
+        self.top_wave_img.place(relx=0, rely=0)
 
         bottom_wave = Image.open("images/bottom_wave.png")
-        bottom_wave = bottom_wave.resize((1280, 170), Image.ANTIALIAS)
+        bottom_wave = bottom_wave.resize((screen_width, 170), Image.ANTIALIAS)
         bottom_wave = ImageTk.PhotoImage(bottom_wave)
         self.bottom_wave_img = tk.Label(
             image=bottom_wave, background='#ffffff')
         self.bottom_wave_img.image = bottom_wave
-        self.bottom_wave_img.place(x=-3, y=508)
+        self.bottom_wave_img.place(relx=0, rely=0.75,)
 
     def __login(self, username, password):
         # If the login was unsuccessful,
@@ -131,7 +132,6 @@ class Login(tk.Frame):
 
     def destroy(self):
         self.program_title.destroy()
-        self.program_title_2.destroy()
         self.username_input.destroy()
         self.password_input.destroy()
         self.login_btn.destroy()
@@ -149,8 +149,6 @@ class Dashboard(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, background='#ffffff')
         self.controller = controller
-        self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(0, weight=1)
 
         program_title = tk.Label(
             self, text=f"👋 Welcome Back, {logic.get_current_user_name()}.", font="Inter 45", background='#ffffff')
@@ -159,7 +157,14 @@ class Dashboard(tk.Frame):
         highscores_title = tk.Label(
             self, text=f"Recent Highscores", font="Inter 30 bold", background='#ffffff')
         highscores_title.place(relx=0.05, rely=0.24)
-        
+
+        highscores_placeholder = tk.Text(self, width=40, height=10, font="Inter 25", background='#ffffff')
+        lines = quiz.load_score()
+        for line in lines:
+            highscores_placeholder.insert("insert", line)
+        highscores_placeholder.configure(state='disabled')
+        highscores_placeholder.place(relx=0.05, rely=0.30)
+
         quiz_title = tk.Label(
             self, text=f"CS PSB Quiz", font="Inter 30 bold", background='#ffffff')
         quiz_title.place(relx=0.7, rely=0.24)
@@ -183,6 +188,7 @@ class Dashboard(tk.Frame):
                                highlightbackground="#ffffff")
         
         attempt_btn.place(relx=0.67, rely=0.73)
+
 
 class QuestionPage(tk.Frame):
     """
@@ -221,11 +227,48 @@ class QuestionPage(tk.Frame):
         if quiz.is_end_of_quiz(self.current_question):
             self.display_result()
             self.show_results()
+            self.save_score()
+            self.show_personal_score()
             return
+
 
         # shows the next question
         self.display_question()
         self.display_options()
+
+    def save_score(self):
+        username = logic.get_current_user_name()
+        score = quiz.get_results()[2]
+
+        lines = quiz.load_score()
+
+        if len(lines) >= 10:
+            del lines[0]
+
+        file2write = open("high_scores", 'w+')
+
+        # rewrite into the file
+        for line in lines:
+            file2write.write(line)
+
+        file2write.write(str(username) + " ")
+        file2write.write(str(score) + "\n")
+        file2write.close()
+
+    def show_personal_score(self):
+        # lines = func to read from text file (count = 10)
+        username = logic.get_current_user_name()
+        new_lines = []
+        lines = quiz.load_score()
+
+        # create a new list to assign value from LINES list, based on the curr username
+        for line in lines:
+            if username in line:
+                new_lines.append(line)
+
+        # return last 3 in the list
+        return new_lines[-3:]
+
 
     def buttons(self):
         # The first button is the Next button to move to the
@@ -241,7 +284,7 @@ class QuestionPage(tk.Frame):
                                 bg="#ffffff")
 
         # palcing the button  on the screen
-        self.next_button.place(relx=0.78, y=410)
+        self.next_button.place(relx=0.76, rely=0.67)
 
         # This is the second button which is used to Quit the GUI
         self.quit_button = tk.Button(self, text="Quit 🏠", command=self.show_dashboard, font="Inter 14",
@@ -288,17 +331,16 @@ class QuestionPage(tk.Frame):
         self.q_no.insert("insert", quiz.get_current_question(
             self.current_question))
         self.q_no.configure(state='disabled')
-        self.q_no.place(x=70, y=180)
+        self.q_no.place(relx=0.05, rely=0.3)
         
         tk.Label(
-            self, text="Options:", font="Inter 24 bold", background='#ffffff').place(x=70, y=260)
+            self, text="Options:", font="Inter 24 bold", background='#ffffff').place(relx=0.05, rely=0.4)
 
     def radio_buttons(self):
         # initialize the list with an empty list of options
         option_list = []
-
         # Position of the first option
-        y_pos = 310
+        y_pos = 0.47
         for i in range(0, 4):
             # setting the radio button properties
             radio_btn = tk.Radiobutton(self, text=" ", font="Inter 20", variable=self.opt_selected,
@@ -306,9 +348,9 @@ class QuestionPage(tk.Frame):
             # adding the button to the list
             option_list.append(radio_btn)
             # placing the button
-            radio_btn.place(x=70, y=y_pos)
+            radio_btn.place(relx=0.05, rely=y_pos)
             # incrementing the y-axis position by 40
-            y_pos += 40
+            y_pos += 0.07
 
         # return the radio buttons
         return option_list
@@ -342,8 +384,6 @@ class Results(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, background='#ffffff')
         self.controller = controller
-        self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(0, weight=1)
 
         self.program_title = tk.Label(
             self, text="👨‍💻 CS PSB Quiz 👩‍💻", font="Inter 50 bold", background='#ffffff')
@@ -376,6 +416,17 @@ class Results(tk.Frame):
                                relief='groove',
                                highlightbackground="#ffffff")
         self.dashboard_btn.place(relx=0.8, rely=0.71)
+
+        self.personal_score_label = tk.Label(self, text=f"Personal Highscore", font="Inter 26 bold", background='#ffffff',
+                                              foreground="#000000")
+        self.personal_score_label.place(relx=0.049, rely=0.3)
+
+        self.personal_score_list = tk.Text(self, width=60)
+        lines = QuestionPage.show_personal_score(self)
+        for line in lines:
+            self.personal_score_list.insert("insert", line)
+        self.personal_score_list.configure(state='disabled')
+        self.personal_score_list.place(relx=0.049, rely=0.4)
 
         self.question_answer_label = tk.Label(self, text=f"Review", font="Inter 26 bold", background='#ffffff',
                                               foreground="#000000")

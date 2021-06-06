@@ -7,7 +7,7 @@ variables = Variables()
 class Logic:
     def __init__(self):
         self.username = ""
-        
+
     def login(self, username, password):
         # Load the users dictionary,
         users = variables.get_users()
@@ -116,3 +116,11 @@ class Quiz:
     def get_answers(self):
         answers = list(map(lambda x: self.answer_map[x], self.answers))
         return answers
+
+    def load_score(self):
+        # Using readlines()
+        file1 = open('high_scores', 'r')
+        lines = file1.readlines()
+        file1.close()
+        return lines
+
