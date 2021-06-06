@@ -45,3 +45,8 @@ class Variables:
         if len(self.answers) == 0:
             self.load_quiz()
         return self.answers
+    
+    def get_scores(self):
+        with open('high_scores', 'r') as score_file:
+             scores = score_file.readlines()
+        return scores

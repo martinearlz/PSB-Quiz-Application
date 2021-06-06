@@ -23,7 +23,26 @@ class Logic:
     
     def get_current_user_name(self):
         return self.username
+    
+    def get_user_scores(self):
+        scores = variables.get_scores()
+
+        # Create a new list to assign value from LINES list, based on the current username.
+        user_scores = list(filter(lambda score: self.username in score, scores))
         
+        # return last 3 in the list
+        return user_scores[-3:]
+    
+    def get_high_scores(self):
+        # Get the last 10 scores
+        scores = variables.get_scores()[-10:]
+        # Sort from highest to lowest.
+        scores.sort(reverse=True, key=lambda x: int(''.join(filter(str.isdigit, x))))
+        return scores
+    
+    def save_user_score(self, score):
+        with open("high_scores", "a+") as score_file:
+            score_file.write(f"{self.username} {score}\n")
 
 class Quiz:
     def __init__(self):
@@ -63,7 +82,7 @@ class Quiz:
         # calculates the wrong count
         wrong_answers = len(self.questions) - self.correct_answers
         # calculates the percentage of correct answers
-        score = self.correct_answers / len(self.questions) * 100
+        score = int(self.correct_answers / len(self.questions) * 100)
         return self.correct_answers, wrong_answers, score
 
     def is_end_of_quiz(self, q_no):
@@ -116,11 +135,3 @@ class Quiz:
     def get_answers(self):
         answers = list(map(lambda x: self.answer_map[x], self.answers))
         return answers
-
-    def load_score(self):
-        # Using readlines()
-        file1 = open('high_scores', 'r')
-        lines = file1.readlines()
-        file1.close()
-        return lines
-

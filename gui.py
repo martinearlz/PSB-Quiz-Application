@@ -5,9 +5,12 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from PIL import ImageTk, Image
 from logic import Logic, Quiz
+from random import randint
 
 logic = Logic()
 quiz = Quiz()
+colors = ["#233256", "#C00E32", "#F25022", "#00A4EF", "#7FBA00",
+          "#FFB900", "#dd4540", "#7ab888", "#fbc633", "#740d2d", "#3ba194"]
 
 
 class MainController(tk.Tk):
@@ -46,6 +49,9 @@ class MainController(tk.Tk):
         # Initially show the login page.
         self.show_frame(Login)
         quiz.has_initialized = True
+
+    def get_random_color(self):
+        return colors[randint(0, len(colors) - 1)]
 
     def show_frame(self, page):
         self.frames[page].tkraise()
@@ -97,13 +103,13 @@ class Login(tk.Frame):
                                    height=2)
 
         self.login_btn.place(relx=0.5, rely=0.63, anchor="center")
-        
+
         # Don't reinitialize the images if we already initialized it before.
         if quiz.has_initialized:
             return
-        
+
         screen_width = self.controller.winfo_screenwidth()
-        
+
         top_wave = Image.open("images/top_wave.png")
         top_wave = top_wave.resize((screen_width, 170), Image.ANTIALIAS)
         top_wave = ImageTk.PhotoImage(top_wave)
@@ -154,40 +160,54 @@ class Dashboard(tk.Frame):
             self, text=f"👋 Welcome Back, {logic.get_current_user_name()}.", font="Inter 45", background='#ffffff')
         program_title.place(relx=0.05, rely=0.1)
         
+        self.show_high_scores()
+        self.show_quiz()
+
+
+    def show_high_scores(self):
+        high_scores = logic.get_high_scores()
         highscores_title = tk.Label(
-            self, text=f"Recent Highscores", font="Inter 30 bold", background='#ffffff')
-        highscores_title.place(relx=0.05, rely=0.24)
+            self, text=f"💯 Recent Highscores", font="Inter 30 bold", background='#ffffff')
+        highscores_title.place(relx=0.05, rely=0.22)
 
-        highscores_placeholder = tk.Text(self, width=40, height=10, font="Inter 25", background='#ffffff')
-        lines = quiz.load_score()
-        for line in lines:
-            highscores_placeholder.insert("insert", line)
-        highscores_placeholder.configure(state='disabled')
-        highscores_placeholder.place(relx=0.05, rely=0.30)
+        tk.Label(self, text=f"Rank", font="Inter 22",
+                 background='#ffffff').place(relx=0.05, rely=0.3)
+        tk.Label(self, text=f"Username", font="Inter 22",
+                 background='#ffffff').place(relx=0.12, rely=0.3)
+        tk.Label(self, text=f"Score", font="Inter 22",
+                 background='#ffffff').place(relx=0.23, rely=0.3)
 
-        quiz_title = tk.Label(
-            self, text=f"CS PSB Quiz", font="Inter 30 bold", background='#ffffff')
-        quiz_title.place(relx=0.7, rely=0.24)
-        
-        quiz_image = tk.Label(self, text=f"📗👨‍💻👩‍💻📘", font="Inter 70", background='#ffffff')
-        quiz_image.place(relx=0.66, rely=0.35)
-        
-        quiz_description = tk.Text(self, wrap="word", font="Inter", foreground="#000000", background='#ffffff', width=35, bd=0, borderwidth=0, selectborderwidth=0, highlightthickness=0)
+        y_pos = 0.37
+        for index, score in enumerate(high_scores):
+            score = score.split()
+            tk.Label(self, text=index+1, font="Inter 25 bold", background='#ffffff',
+                     foreground=self.controller.get_random_color()).place(relx=0.06, rely=y_pos)
+            tk.Label(self, text=score[0], font="Inter 25", background='#ffffff').place(
+                relx=0.13, rely=y_pos)
+            tk.Label(self, text=f"{score[1]}%", font="Inter 25", background='#ffffff').place(
+                relx=0.23, rely=y_pos)
+            y_pos += 0.06
+
+    def show_quiz(self):
+        tk.Label(self, text=f"CS PSB Quiz", font="Inter 30 bold",
+                 background='#ffffff').place(relx=0.7, rely=0.24)
+
+        tk.Label(self, text=f"📗💻🖥️📘", font="Inter 70",
+                 background='#ffffff').place(relx=0.66, rely=0.35)
+
+        quiz_description = tk.Text(self, wrap="word", font="Inter", foreground="#000000", background='#ffffff',
+                                   width=35, bd=0, borderwidth=0, selectborderwidth=0, highlightthickness=0)
         quiz_description.insert("insert", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae porttitor nulla. Maecenas auctor volutpat lectus, quis efficitur eros eleifend vel. Proin dignissim pretium eros eget bibendum. Integer rutrum leo nec orci feugiat accumsan. Integer elementum sem sed tincidunt rutrum. Phasellus porta quis libero ut varius. Nulla convallis auctor justo non porttitor. Vestibulum laoreet malesuada egestas.")
         quiz_description.configure(state='disabled')
         quiz_description.place(relx=0.67, rely=0.5)
-        
-        attempt_btn = tk.Button(self,
-                                font="Inter 12 bold",
-                                text="Attempt Quiz ➡️",
-                               command=lambda: self.controller.show_frame(QuestionPage), 
-                               width=33,
-                               borderwidth=1,
-                               fg='#B20437',
-                               relief='groove',
-                               highlightbackground="#ffffff")
-        
-        attempt_btn.place(relx=0.67, rely=0.73)
+
+        tk.Button(self, font="Inter 12 bold", text="Attempt Quiz ➡️",
+                  command=lambda: self.controller.show_frame(QuestionPage),
+                  width=33,
+                  borderwidth=1,
+                  fg='#B20437',
+                  relief='groove',
+                  highlightbackground="#ffffff").place(relx=0.67, rely=0.73)
 
 
 class QuestionPage(tk.Frame):
@@ -199,18 +219,6 @@ class QuestionPage(tk.Frame):
         tk.Frame.__init__(self, parent, background='#ffffff')
         self.controller = controller
         self.initialize()
-
-    def display_result(self):
-        correct_answers, wrong_answers, score = quiz.get_results()
-
-        correct = f"Correct: {correct_answers}"
-        wrong = f"Wrong: {wrong_answers}"
-
-        # calcultaes the percentage of correct answers
-        result = f"Score: {score}%"
-
-        # Shows a message box to display the result
-        messagebox.showinfo("Result", f"{result}\n{correct}\n{wrong}")
 
     def next_btn(self):
         # When the next button is clicked, destroy/remove the previous question to prevent overlapping.
@@ -225,76 +233,39 @@ class QuestionPage(tk.Frame):
         # Checks whether the user is already at the end of the quiz,
         # displays the score of the user if true.
         if quiz.is_end_of_quiz(self.current_question):
-            self.display_result()
+            score = quiz.get_results()[2]
+            logic.save_user_score(score)
             self.show_results()
-            self.save_score()
-            self.show_personal_score()
             return
-
 
         # shows the next question
         self.display_question()
         self.display_options()
 
-    def save_score(self):
-        username = logic.get_current_user_name()
-        score = quiz.get_results()[2]
-
-        lines = quiz.load_score()
-
-        if len(lines) >= 10:
-            del lines[0]
-
-        file2write = open("high_scores", 'w+')
-
-        # rewrite into the file
-        for line in lines:
-            file2write.write(line)
-
-        file2write.write(str(username) + " ")
-        file2write.write(str(score) + "\n")
-        file2write.close()
-
-    def show_personal_score(self):
-        # lines = func to read from text file (count = 10)
-        username = logic.get_current_user_name()
-        new_lines = []
-        lines = quiz.load_score()
-
-        # create a new list to assign value from LINES list, based on the curr username
-        for line in lines:
-            if username in line:
-                new_lines.append(line)
-
-        # return last 3 in the list
-        return new_lines[-3:]
-
-
     def buttons(self):
         # The first button is the Next button to move to the
         # next Question
-        self.next_button = tk.Button(self, text="Next Question ➡️", 
-                                     command=self.next_btn, 
+        self.next_button = tk.Button(self, text="Next Question ➡️",
+                                     command=self.next_btn,
                                      font="Inter 14",
                                      width=20,
-                                borderwidth=1,
-                                fg='#B20437',
-                                relief='groove',
-                                highlightbackground="#ffffff",
-                                bg="#ffffff")
+                                     borderwidth=1,
+                                     fg='#B20437',
+                                     relief='groove',
+                                     highlightbackground="#ffffff",
+                                     bg="#ffffff")
 
         # palcing the button  on the screen
         self.next_button.place(relx=0.76, rely=0.67)
 
         # This is the second button which is used to Quit the GUI
         self.quit_button = tk.Button(self, text="Quit 🏠", command=self.show_dashboard, font="Inter 14",
-                               borderwidth=1,
-                               height=2,
-                               fg='#B20437',
-                               relief='groove',
-                               highlightbackground="#ffffff",
-                               bg="#ffffff")
-        
+                                     borderwidth=1,
+                                     height=2,
+                                     fg='#B20437',
+                                     relief='groove',
+                                     highlightbackground="#ffffff",
+                                     bg="#ffffff")
 
         # placing the Quit button on the screen
         self.quit_button.place(relx=0.055, rely=0.12)
@@ -325,14 +296,15 @@ class QuestionPage(tk.Frame):
 
     def display_question(self):
         tk.Label(
-            self, text="👨‍💻 CS PSB Quiz 👩‍💻", font="Inter 50 bold", background='#ffffff').place(relx=0.35, rely=0.1)
-        
-        self.q_no = tk.Text(self, wrap="word", font="Inter 26", foreground="#000000", width=68, background='#ffffff', height=2, bd=0, borderwidth=0, selectborderwidth=0, highlightthickness=0)
+            self, text="💻 CS PSB Quiz 🖥️", font="Inter 50 bold", background='#ffffff').place(relx=0.35, rely=0.1)
+
+        self.q_no = tk.Text(self, wrap="word", font="Inter 26", foreground="#000000", width=68,
+                            background='#ffffff', height=2, bd=0, borderwidth=0, selectborderwidth=0, highlightthickness=0)
         self.q_no.insert("insert", quiz.get_current_question(
             self.current_question))
         self.q_no.configure(state='disabled')
         self.q_no.place(relx=0.05, rely=0.3)
-        
+
         tk.Label(
             self, text="Options:", font="Inter 24 bold", background='#ffffff').place(relx=0.05, rely=0.4)
 
@@ -390,9 +362,12 @@ class Results(tk.Frame):
         self.program_title.place(relx=0.35, rely=0.1)
         self.show_score()
         self.show_misc()
+        self.show_latest_scores()
+        self.show_accurate_answers()
 
     def show_score(self):
-        self.label = tk.Label(self, text="You got:", font="Inter 28", background='#ffffff')
+        self.label = tk.Label(self, text="You got:",
+                              font="Inter 28", background='#ffffff')
         self.label.place(relx=0.52, rely=0.3, anchor="center")
 
         score = quiz.get_results()[2]
@@ -402,40 +377,46 @@ class Results(tk.Frame):
         self.score_label.place(relx=0.52, rely=0.4, anchor="center")
 
     def show_misc(self):
-        # Shows other miscellaneous stuff such as buttons and labels.
+        # Miscellaneous stuff such as buttons and labels.
         self.retake_btn = tk.Button(self, text="Retake Quiz ♻️", command=lambda: self.show_frame(
             QuestionPage), borderwidth=1,
-                               fg='#B20437',
-                               relief='groove',
-                               highlightbackground="#ffffff")
+            fg='#B20437',
+            relief='groove',
+            highlightbackground="#ffffff")
         self.retake_btn.place(relx=0.8, rely=0.65)
-
         self.dashboard_btn = tk.Button(
             self, text="Finish 🏠", command=lambda: self.show_frame(Dashboard), borderwidth=1,
-                               fg='#B20437',
-                               relief='groove',
-                               highlightbackground="#ffffff")
+            fg='#B20437',
+            relief='groove',
+            highlightbackground="#ffffff")
         self.dashboard_btn.place(relx=0.8, rely=0.71)
 
-        self.personal_score_label = tk.Label(self, text=f"Personal Highscore", font="Inter 26 bold", background='#ffffff',
-                                              foreground="#000000")
-        self.personal_score_label.place(relx=0.049, rely=0.3)
-
-        self.personal_score_list = tk.Text(self, width=60)
-        lines = QuestionPage.show_personal_score(self)
-        for line in lines:
-            self.personal_score_list.insert("insert", line)
+    def show_latest_scores(self):
+        # Personal 3 Latest Scores
+        scores = logic.get_user_scores()
+        self.personal_score_label = tk.Label(self, text=f"Latest Scores", font="Inter 26 bold", background='#ffffff',
+                                             foreground=self.controller.get_random_color())
+        self.personal_score_label.place(relx=0.049, rely=0.28)
+        self.personal_score_list = tk.Text(
+            self, width=25, height=3, font="Inter 25", background='#ffffff', foreground="#000000", highlightthickness=2)
+        self.personal_score_list.tag_configure("center", justify='center')
+        for score in scores:
+            score = int(''.join(filter(str.isdigit, score)))
+            self.personal_score_list.insert("insert", f"{score}%\n")
+        self.personal_score_list.tag_add("center", "1.0", "end")
         self.personal_score_list.configure(state='disabled')
-        self.personal_score_list.place(relx=0.049, rely=0.4)
+        self.personal_score_list.place(relx=0.049, rely=0.35)
 
+    def show_accurate_answers(self):
+        # Accurate Answers
         self.question_answer_label = tk.Label(self, text=f"Review", font="Inter 26 bold", background='#ffffff',
-                                              foreground="#000000")
+                                              foreground=self.controller.get_random_color())
         self.question_answer_label.place(relx=0.049, rely=0.59)
-
-        self.question_answer_list = tk.Listbox(self, width=90)
+        self.question_answer_list = tk.Text(self, width=90, height=10, font="Inter 14",
+                                            background='#ffffff', foreground="#000000", highlightthickness=2, wrap="word")
         for index, questions in enumerate(quiz.get_questions()):
             self.question_answer_list.insert(
-                index, f"{questions} : {quiz.get_answers()[index]}")
+                "insert", f"{questions} : Answer = {quiz.get_answers()[index]}\n")
         self.question_answer_list.place(relx=0.05, rely=0.65)
 
     def show_frame(self, frame):
