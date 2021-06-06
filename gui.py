@@ -358,7 +358,7 @@ class Results(tk.Frame):
         self.controller = controller
 
         self.program_title = tk.Label(
-            self, text="👨‍💻 CS PSB Quiz 👩‍💻", font="Inter 50 bold", background='#ffffff')
+            self, text="💻 CS PSB Quiz 🖥️", font="Inter 50 bold", background='#ffffff')
         self.program_title.place(relx=0.35, rely=0.1)
         self.show_score()
         self.show_misc()
