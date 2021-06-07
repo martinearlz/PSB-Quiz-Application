@@ -167,7 +167,7 @@ class Dashboard(tk.Frame):
     def show_high_scores(self):
         high_scores = logic.get_high_scores()
         highscores_title = tk.Label(
-            self, text=f"💯 Recent Highscores", font="Inter 30 bold", background='#ffffff')
+            self, text=f"💯Recent Highscores", font="Inter 30 bold", background='#ffffff')
         highscores_title.place(relx=0.05, rely=0.22)
 
         tk.Label(self, text=f"Rank", font="Inter 22",
@@ -192,16 +192,16 @@ class Dashboard(tk.Frame):
         tk.Label(self, text=f"CS PSB Quiz", font="Inter 30 bold",
                  background='#ffffff').place(relx=0.7, rely=0.24)
 
-        tk.Label(self, text=f"📗💻🖥️📘", font="Inter 70",
+        tk.Label(self, text=f"🍏📗💻🖥️📘🍎", font="Inter 70",
                  background='#ffffff').place(relx=0.66, rely=0.35)
 
         quiz_description = tk.Text(self, wrap="word", font="Inter", foreground="#000000", background='#ffffff',
                                    width=35, bd=0, borderwidth=0, selectborderwidth=0, highlightthickness=0)
-        quiz_description.insert("insert", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae porttitor nulla. Maecenas auctor volutpat lectus, quis efficitur eros eleifend vel. Proin dignissim pretium eros eget bibendum. Integer rutrum leo nec orci feugiat accumsan. Integer elementum sem sed tincidunt rutrum. Phasellus porta quis libero ut varius. Nulla convallis auctor justo non porttitor. Vestibulum laoreet malesuada egestas.")
+        quiz_description.insert("insert", "Believe in your own abilities and work hard -羽生結弦" )
         quiz_description.configure(state='disabled')
         quiz_description.place(relx=0.67, rely=0.5)
 
-        tk.Button(self, font="Inter 12 bold", text="Attempt Quiz ➡️",
+        tk.Button(self, font="Inter 12 bold", text="Attempt Quiz ✍➡️",
                   command=lambda: self.controller.show_frame(QuestionPage),
                   width=33,
                   borderwidth=1,
@@ -272,7 +272,7 @@ class QuestionPage(tk.Frame):
 
     def show_dashboard(self):
         confirmation = messagebox.askyesno(
-            "Confirmation", "Are you sure that you want to quit? All progress will be lost.")
+            "Confirmation", "Are you sure that you want to quit? All progress will be lost😔.")
         # If the user clicked no,
         if not confirmation:
             # return and do nothing.
