@@ -2,10 +2,13 @@ from gui import QuestionPage
 from pathlib import Path
 import pytest
 import sys
+
 # Ensures that we can import stuff from the root folder.
 path = str(Path(Path(__file__).parent.absolute()).parent.absolute())
 sys.path.insert(0, path)
 import logic
+import variables
+
 
 def test_mark_correct_answer():
     '''
@@ -95,7 +98,7 @@ def test_get_all_wrong_results():
     assert wrong == 10
     assert score == 0
 
-    
+
 def test_is_end_of_quiz():
     '''
     Gherkin Test Format:
@@ -105,17 +108,121 @@ def test_is_end_of_quiz():
     * And: I have clicked next question.
     * Then: the result pop up will show.
     '''
-    quiz = logic.Quiz() 
-    assert quiz. is_end_of_quiz(q_no=10)
+    quiz = logic.Quiz()
+    assert quiz.is_end_of_quiz(q_no=10)
+
+
 def test_get_current_question():
     '''
     Gherkin Test Format:
-    * Scenario: Returns the current question text for the given question number.
+    * Scenario: Displaying current question number 1
     * Given:I am currently attempting a quiz.
-    * When: My current question is number 1
-    * And: My current question is number 1
-    * Then: Tt should show question number 1
+    * When: my current question is number 1
+    * And: my current question is number 1
+    * Then: it should show question number 1
     '''
     quiz = logic.Quiz()
-    question: "Q1. What is technology will be used for project?"
+    question = "Q1. What is technology will be used for project?"
     assert quiz.get_current_question(q_no=0) == question
+
+
+def test_get_questions():
+    '''
+    Gherkin Test Format:
+    * Scenario: Correct Question is Displayed
+    * Given: I am currently attempting a quiz.
+    * When: All the questions are displayed
+    * And: The questions is the same as question
+    * Then: Questions should show
+    '''
+    quiz = logic.Quiz()
+    quiz.get_questions()
+    question = [
+        "Q1. What is technology will be used for project?",
+        "Q2. Which methodology is the most traditional software development method?",
+        "Q3. Which methodology is applicable to any project with aggressive deadline, complex requirements and a degree of uniqueness?",
+        "Q4. Which development process that relies on the repetition of a very short development cycle, and testing?",
+        "Q5. Which diagram shows the relationship between the user and the different use cases in which the use is involved?",
+        "Q6. When we need to quickly release software, which methodology we need to choose?",
+        "Q7. In scrum methodology, who define what the product releases?",
+        "Q8. When we want to decryption the fie, what state do we need to turn the data into?",
+        "Q9. Which tools is let the process of breaking down project deliverables into smaller, more manageable components?",
+        "Q10.What connects software and hardware?"
+    ]
+    assert quiz.get_questions() == question
+
+
+def test_get_options():
+    '''
+    Gherkin Test Format:
+    * Scenario: Options is Displayed
+    * Given: I am currently attempting a quiz.
+    * When: All the options are displayed
+    * And: The options in the quiz.json file matches the questions displayed
+    * Then: Options should show
+    '''
+    quiz = variables.Variables()
+    quiz.get_options()
+    options = [
+        [
+            "Kanban",
+            "Kanban board",
+            "Gantt chart",
+            "Bar chart"
+        ],
+        [
+            "Waterfall methodology",
+            "Scrum methodology",
+            "Agile methodology",
+            "RUP methodology"
+        ],
+        [
+            "Waterfall methodology",
+            "Scrum methodology",
+            "Agile methodology",
+            "RUP methodology"
+        ],
+        [
+            "Agile methodology",
+            "Behavior-driven development and business process management",
+            "Lightweight methodology",
+            "Test Driven Development"
+        ],
+        [
+            "Class diagram",
+            "Use case diagram",
+            "Gantt chart",
+            "Bar chart"
+        ],
+        [
+            "Rad methodology",
+            "Silk methodology",
+            "Scrum methodology",
+            "V methodology"
+        ],
+        [
+            "Scrum master",
+            "Product owner",
+            "Development team",
+            "No one"
+        ],
+        [
+            "Origin",
+            "Encryption",
+            "Read-only",
+            "Hide"
+        ],
+        [
+            "Gantt chart",
+            "Kanban board",
+            "WBS",
+            "Bar chart"
+        ],
+        [
+            "database",
+            "operation system",
+            "kernel",
+            "code"
+        ]
+    ]
+    assert quiz.get_options() == options
