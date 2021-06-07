@@ -93,3 +93,23 @@ def test_get_all_wrong_results():
     assert correct == 0
     assert wrong == 10
     assert score == 0
+
+    
+def test_is_end_of_quiz():
+    '''
+    Gherkin Test Format:
+    * Scenario: It's the end of the quiz
+    * Given: I am currently at the end of the quiz.
+    * When: It is the last question 
+    * And: I have clicekd next question.
+    * Then: the result pop up will show.
+    '''
+def test_get_current_question():
+    '''
+    Gherkin Test Format:
+    * Scenario: Returns the current question text for the given question number.
+    * Given:I am currently attempting a quiz.
+    * When: It is the last question 
+    * And: My previous score is 0, my wrong answers 0, and number of correct answers is 0.
+    * Then: it should show 
+    '''
