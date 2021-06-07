@@ -113,3 +113,40 @@ def test_get_current_question():
     * And: My previous score is 0, my wrong answers 0, and number of correct answers is 0.
     * Then: it should show 
     '''
+
+
+def test_get_questions():
+    '''
+    Gherkin Test Format:
+    * Scenario: Correct Question is Displayed
+    * Given: I am currently attempting a quiz.
+    * When: all the questions are displayed
+    * And: The questions is the same as question
+    * Then: it should show
+    '''
+    quiz = logic.Quiz()
+    quiz.get_questions()
+    question = [
+        "Q1. What is technology will be used for project?",
+        "Q2. Which methodology is the most traditional software development method?",
+        "Q3. Which methodology is applicable to any project with aggressive deadline, complex requirements and a degree of uniqueness?",
+        "Q4. Which development process that relies on the repetition of a very short development cycle, and testing?",
+        "Q5. Which diagram shows the relationship between the user and the different use cases in which the use is involved?",
+        "Q6. When we need to quickly release software, which methodology we need to choose?",
+        "Q7. In scrum methodology, who define what the product releases?",
+        "Q8. When we want to decryption the fie, what state do we need to turn the data into?",
+        "Q9. Which tools is let the process of breaking down project deliverables into smaller, more manageable components?",
+        "Q10.What connects software and hardware?"
+    ]
+    assert quiz.get_questions() == question
+
+
+def test_get_options():
+    '''
+    Gherkin Test Format:
+    * Scenario: Returns the current question text for the given question number.
+    * Given:I am currently attempting a quiz.
+    * When: It is the last question
+    * And: My previous score is 0, my wrong answers 0, and number of correct answers is 0.
+    * Then: it should show
+    '''
