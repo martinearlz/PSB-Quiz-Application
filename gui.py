@@ -197,7 +197,7 @@ class Dashboard(tk.Frame):
 
         quiz_description = tk.Text(self, wrap="word", font="Inter", foreground="#000000", background='#ffffff',
                                    width=35, bd=0, borderwidth=0, selectborderwidth=0, highlightthickness=0)
-        quiz_description.insert("insert", "Believe in your own abilities and work hard -羽生結弦" )
+        quiz_description.insert("insert", "Believe in your own abilities and work hard -羽生結弦\n Good Luck on the quiz! Do your best 💪" )
         quiz_description.configure(state='disabled')
         quiz_description.place(relx=0.67, rely=0.5)
 
