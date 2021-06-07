@@ -107,17 +107,22 @@ def test_is_end_of_quiz():
     * And: I have clicekd next question.
     * Then: the result pop up will show.
     '''
+    quiz = logic.Quiz()
+    assert quiz.is_end_of_quiz(q_no=10)
 
 
 def test_get_current_question():
     '''
     Gherkin Test Format:
-    * Scenario: Returns the current question text for the given question number.
+    * Scenario: Displaying current question number 1
     * Given:I am currently attempting a quiz.
-    * When: It is the last question 
-    * And: My previous score is 0, my wrong answers 0, and number of correct answers is 0.
-    * Then: it should show 
+    * When: my current question is number 1
+    * And: my current question is number 1
+    * Then: it should show question number 1
     '''
+    quiz = logic.Quiz()
+    question = "Q1. What is technology will be used for project?"
+    assert quiz.get_current_question(q_no=0) == question
 
 
 def test_get_questions():
