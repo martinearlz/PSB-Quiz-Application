@@ -1,10 +1,13 @@
 from pathlib import Path
 import pytest
 import sys
+
 # Ensures that we can import stuff from the root folder.
 path = str(Path(Path(__file__).parent.absolute()).parent.absolute())
 sys.path.insert(0, path)
 import logic
+import variables
+
 
 def test_mark_correct_answer():
     '''
@@ -94,7 +97,7 @@ def test_get_all_wrong_results():
     assert wrong == 10
     assert score == 0
 
-    
+
 def test_is_end_of_quiz():
     '''
     Gherkin Test Format:
@@ -104,6 +107,8 @@ def test_is_end_of_quiz():
     * And: I have clicekd next question.
     * Then: the result pop up will show.
     '''
+
+
 def test_get_current_question():
     '''
     Gherkin Test Format:
@@ -120,9 +125,9 @@ def test_get_questions():
     Gherkin Test Format:
     * Scenario: Correct Question is Displayed
     * Given: I am currently attempting a quiz.
-    * When: all the questions are displayed
+    * When: All the questions are displayed
     * And: The questions is the same as question
-    * Then: it should show
+    * Then: Questions should show
     '''
     quiz = logic.Quiz()
     quiz.get_questions()
@@ -144,9 +149,74 @@ def test_get_questions():
 def test_get_options():
     '''
     Gherkin Test Format:
-    * Scenario: Returns the current question text for the given question number.
-    * Given:I am currently attempting a quiz.
-    * When: It is the last question
-    * And: My previous score is 0, my wrong answers 0, and number of correct answers is 0.
-    * Then: it should show
+    * Scenario: Options is Displayed
+    * Given: I am currently attempting a quiz.
+    * When: All the options are displayed
+    * And: The options in the quiz.json file matches the questions displayed
+    * Then: Options should show
     '''
+    quiz = variables.Variables()
+    quiz.get_options()
+    options = [
+        [
+            "Kanban",
+            "Kanban board",
+            "Gantt chart",
+            "Bar chart"
+        ],
+        [
+            "Waterfall methodology",
+            "Scrum methodology",
+            "Agile methodology",
+            "RUP methodology"
+        ],
+        [
+            "Waterfall methodology",
+            "Scrum methodology",
+            "Agile methodology",
+            "RUP methodology"
+        ],
+        [
+            "Agile methodology",
+            "Behavior-driven development and business process management",
+            "Lightweight methodology",
+            "Test Driven Development"
+        ],
+        [
+            "Class diagram",
+            "Use case diagram",
+            "Gantt chart",
+            "Bar chart"
+        ],
+        [
+            "Rad methodology",
+            "Silk methodology",
+            "Scrum methodology",
+            "V methodology"
+        ],
+        [
+            "Scrum master",
+            "Product owner",
+            "Development team",
+            "No one"
+        ],
+        [
+            "Origin",
+            "Encryption",
+            "Read-only",
+            "Hide"
+        ],
+        [
+            "Gantt chart",
+            "Kanban board",
+            "WBS",
+            "Bar chart"
+        ],
+        [
+            "database",
+            "operation system",
+            "kernel",
+            "code"
+        ]
+    ]
+    assert quiz.get_options() == options
