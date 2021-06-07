@@ -192,12 +192,12 @@ class Dashboard(tk.Frame):
         tk.Label(self, text=f"CS PSB Quiz", font="Inter 30 bold",
                  background='#ffffff').place(relx=0.7, rely=0.24)
 
-        tk.Label(self, text=f"🍏📗💻🖥️📘🍎", font="Inter 70",
+        tk.Label(self, text=f"📗💻🖥️📘", font="Inter 70",
                  background='#ffffff').place(relx=0.66, rely=0.35)
 
         quiz_description = tk.Text(self, wrap="word", font="Inter", foreground="#000000", background='#ffffff',
                                    width=35, bd=0, borderwidth=0, selectborderwidth=0, highlightthickness=0)
-        quiz_description.insert("insert", "Believe in your own abilities and work hard -羽生結弦\n Good Luck on the quiz! Do your best 💪" )
+        quiz_description.insert("insert", "Believe in your own abilities and work hard -羽生結弦\n'Everybody is a genius. But if you judge a fish by its ability to climb a tree, it will spend its whole life believing that it is stupid.” – Albert Einstein\n Good Luck on the quiz! Don't forget to pray and Do your best  💪" )
         quiz_description.configure(state='disabled')
         quiz_description.place(relx=0.67, rely=0.5)
 
@@ -385,7 +385,7 @@ class Results(tk.Frame):
             highlightbackground="#ffffff")
         self.retake_btn.place(relx=0.8, rely=0.65)
         self.dashboard_btn = tk.Button(
-            self, text="Finish 🏠", command=lambda: self.show_frame(Dashboard), borderwidth=1,
+            self, text="Finish ✨🏠", command=lambda: self.show_frame(Dashboard), borderwidth=1,
             fg='#B20437',
             relief='groove',
             highlightbackground="#ffffff")
