@@ -261,7 +261,7 @@ class QuestionPage(tk.Frame):
                                      borderwidth=1,
                                      fg='#B20437',
                                      relief='groove',
-                                     highlightbackground="#ffffff",
+                                     highlightbackground="#ffffff")
 
 
         # palcing the button  on the screen
