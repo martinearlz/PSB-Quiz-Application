@@ -137,7 +137,7 @@ def test_get_questions():
     quiz = logic.Quiz()
     quiz.get_questions()
     question = [
-        "Q1. What is technology will be used for project?",
+        "Q1. What will be agile methodology that would be used for this project?",
         "Q2. Which methodology is the most traditional software development method?",
         "Q3. Which methodology is applicable to any project with aggressive deadline, complex requirements and a degree of uniqueness?",
         "Q4. Which development process that relies on the repetition of a very short development cycle, and testing?",
