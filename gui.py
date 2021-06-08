@@ -378,7 +378,7 @@ class Results(tk.Frame):
         self.show_score()
         self.show_misc()
         self.show_latest_scores()
-        self.show_accurate_answers()
+        self.show_correct_answers()
 
     def show_score(self):
         self.label = tk.Label(self, text="You got:",
@@ -415,24 +415,26 @@ class Results(tk.Frame):
         self.personal_score_list = tk.Text(
             self, width=25, height=3, font="Inter 25", background='#ffffff', foreground="#000000", highlightthickness=2)
         self.personal_score_list.tag_configure("center", justify='center')
+        
         for score in scores:
             score = int(''.join(filter(str.isdigit, score)))
             self.personal_score_list.insert("insert", f"{score}%\n")
+            
         self.personal_score_list.tag_add("center", "1.0", "end")
         self.personal_score_list.configure(state='disabled')
         self.personal_score_list.place(relx=0.049, rely=0.35)
 
-    def show_accurate_answers(self):
-        # Accurate Answers
+    def show_correct_answers(self):
+        # Correct Answers
         self.question_answer_label = tk.Label(self, text=f"Review", font="Inter 26 bold", background='#ffffff',
                                               foreground=self.controller.get_random_color())
         self.question_answer_label.place(relx=0.049, rely=0.59)
         self.question_answer_list = tk.Text(self, width=90, height=10, font="Inter 14",
                                             background='#ffffff', foreground="#000000", highlightthickness=2, wrap="word")   
-
-        for index, questions in enumerate(quiz.get_questions()):
-            self.question_answer_list.insert(
-                "insert", f"{questions} : Answer = {quiz.get_answers()[index]}\n")
+        
+        for corrections in quiz.get_corrections():
+            self.question_answer_list.insert("insert", f"{corrections}\n")
+            
         self.question_answer_list.place(relx=0.05, rely=0.65)
 
     def show_frame(self, frame):
