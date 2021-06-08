@@ -163,65 +163,15 @@ def test_get_options():
     quiz = variables.Variables()
     quiz.get_options()
     options = [
-        [
-            "Kanban",
-            "Kanban board",
-            "Gantt chart",
-            "Bar chart"
-        ],
-        [
-            "Waterfall methodology",
-            "Scrum methodology",
-            "Agile methodology",
-            "RUP methodology"
-        ],
-        [
-            "Waterfall methodology",
-            "Scrum methodology",
-            "Agile methodology",
-            "RUP methodology"
-        ],
-        [
-            "Agile methodology",
-            "Behavior-driven development and business process management",
-            "Lightweight methodology",
-            "Test Driven Development"
-        ],
-        [
-            "Class diagram",
-            "Use case diagram",
-            "Gantt chart",
-            "Bar chart"
-        ],
-        [
-            "Rad methodology",
-            "Silk methodology",
-            "Scrum methodology",
-            "V methodology"
-        ],
-        [
-            "Scrum master",
-            "Product owner",
-            "Development team",
-            "No one"
-        ],
-        [
-            "Origin",
-            "Encryption",
-            "Read-only",
-            "Hide"
-        ],
-        [
-            "Gantt chart",
-            "Kanban board",
-            "WBS",
-            "Bar chart"
-        ],
-        [
-            "database",
-            "operation system",
-            "kernel",
-            "code"
-        ]
+        ["Kanban", "Kanban board", "Gantt chart", "Bar chart"],
+        ["Waterfall methodology", "Scrum methodology", "Agile methodology", "RUP methodology"],
+        ["Waterfall methodology", "Scrum methodology", "Agile methodology", "RUP methodology"],
+        ["Agile methodology", "Behavior-driven development and business process management", "Lightweight methodology", "Test Driven Development"],
+        ["Class diagram", "Use case diagram", "Gantt chart", "Bar chart"],
+        ["Rad methodology", "Silk methodology", "Scrum methodology", "V methodology"],
+        ["Scrum master", "Product owner", "Development team", "No one"],
+        ["Origin", "Encryption", "Read-only", "Hide"],
+        ["Gantt chart", "Kanban board", "WBS", "Bar chart"],
+        ["database", "operation system", "kernel", "code"]
     ]
     assert quiz.get_options() == options
