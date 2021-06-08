@@ -47,6 +47,7 @@ class Logic:
 class Quiz:
     def __init__(self):
         self.correct_answers = 0
+        self.user_answers = []
         self.answers = variables.get_answers()
         self.questions = variables.get_questions()
         self.options = variables.get_options()
@@ -66,7 +67,8 @@ class Quiz:
         '''
         if answer == self.answers[q_no]:
             self.correct_answers += 1
-
+        self.user_answers.append(answer)
+        
     def get_results(self):
         '''
         Returns the results of an attempt.
@@ -128,6 +130,7 @@ class Quiz:
 
     def reset_answers(self):
         self.correct_answers = 0
+        self.user_answers.clear()
     
     def get_questions(self):
         return self.questions
@@ -135,3 +138,29 @@ class Quiz:
     def get_answers(self):
         answers = list(map(lambda x: self.answer_map[x], self.answers))
         return answers
+    
+    def get_corrections(self):
+        corrected_list = []
+        
+        if not self.user_answers:
+            return corrected_list
+        
+        # For every answer for each question,
+        for index, correct_answer in enumerate(self.answers):
+            answer = self.user_answers[index]
+            # Skip records where the user's answer is correct.
+            if answer == correct_answer:
+                continue
+            
+            # Check whether the answer is above 0, and gets the answer from the options list. Otherwise, the user did not answer.
+            if answer > 0:
+                users_answer = self.options[index][answer - 1]
+            else:
+                users_answer = "empty"
+                
+            corrected_list.append(f"For question {index + 1}, your answer is: {users_answer}. The correct answer is: {self.options[index][correct_answer - 1]}")
+            
+        if not corrected_list:
+            corrected_list.append("You got it all correct!")
+            
+        return corrected_list
