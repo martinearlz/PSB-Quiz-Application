@@ -104,7 +104,7 @@ def test_is_end_of_quiz():
     * Scenario: It's the end of the quiz
     * Given: I am currently at the end of the quiz.
     * When: It is the last question 
-    * And: I have clicekd next question.
+    * And: I have clicked next question.
     * Then: the result pop up will show.
     '''
     quiz = logic.Quiz()
