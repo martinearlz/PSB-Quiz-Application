@@ -32,6 +32,7 @@ class MainController(tk.Tk):
         self.frame_containers.grid_rowconfigure(0, weight=1)
         self.frame_containers.grid_columnconfigure(0, weight=1)
 
+
         # Custom TKinter styling.
         self.style = ttk.Style(self)
         self.style.theme_use('clam')
@@ -42,6 +43,9 @@ class MainController(tk.Tk):
                                    ('pressed', '#a4a6a5'),
                                    ('active', '#e3e8e6')],
                        background=[('active', '#0e5e34')])
+
+
+        
 
         self.frames = {}
         self.initialize_frames()
@@ -125,6 +129,8 @@ class Login(tk.Frame):
         self.bottom_wave_img.image = bottom_wave
         self.bottom_wave_img.place(relx=0, rely=0.75,)
 
+
+
     def __login(self, username, password):
         # If the login was unsuccessful,
         if not logic.login(username, password):
@@ -153,8 +159,11 @@ class Dashboard(tk.Frame):
     """
 
     def __init__(self, parent, controller):
+
         tk.Frame.__init__(self, parent, background='#ffffff')
         self.controller = controller
+
+       
 
         program_title = tk.Label(
             self, text=f"👋 Welcome Back, {logic.get_current_user_name()}.", font="Inter 45", background='#ffffff')
@@ -216,7 +225,7 @@ class QuestionPage(tk.Frame):
     """
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent, background='#ffffff')
+        tk.Frame.__init__(self, parent, background='#ffffff') 
         self.controller = controller
         self.initialize()
 
@@ -253,7 +262,7 @@ class QuestionPage(tk.Frame):
                                      fg='#B20437',
                                      relief='groove',
                                      highlightbackground="#ffffff",
-                                     bg="#ffffff")
+
 
         # palcing the button  on the screen
         self.next_button.place(relx=0.76, rely=0.67)
@@ -266,6 +275,8 @@ class QuestionPage(tk.Frame):
                                      relief='groove',
                                      highlightbackground="#ffffff",
                                      bg="#ffffff")
+        
+
 
         # placing the Quit button on the screen
         self.quit_button.place(relx=0.055, rely=0.12)
@@ -307,6 +318,9 @@ class QuestionPage(tk.Frame):
 
         tk.Label(
             self, text="Options:", font="Inter 24 bold", background='#ffffff').place(relx=0.05, rely=0.4)
+
+        
+
 
     def radio_buttons(self):
         # initialize the list with an empty list of options
@@ -354,6 +368,7 @@ class Results(tk.Frame):
     """
 
     def __init__(self, parent, controller):
+
         tk.Frame.__init__(self, parent, background='#ffffff')
         self.controller = controller
 
@@ -413,7 +428,8 @@ class Results(tk.Frame):
                                               foreground=self.controller.get_random_color())
         self.question_answer_label.place(relx=0.049, rely=0.59)
         self.question_answer_list = tk.Text(self, width=90, height=10, font="Inter 14",
-                                            background='#ffffff', foreground="#000000", highlightthickness=2, wrap="word")
+                                            background='#ffffff', foreground="#000000", highlightthickness=2, wrap="word")   
+
         for index, questions in enumerate(quiz.get_questions()):
             self.question_answer_list.insert(
                 "insert", f"{questions} : Answer = {quiz.get_answers()[index]}\n")
@@ -426,7 +442,6 @@ class Results(tk.Frame):
     def destroy(self):
         quiz.reset_answers()
         self.program_title.destroy()
-        self.label.destroy()
         self.score_label.destroy()
         self.retake_btn.destroy()
         self.dashboard_btn.destroy()
