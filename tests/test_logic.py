@@ -121,7 +121,7 @@ def test_get_current_question():
     * Then: it should show question number 1
     '''
     quiz = logic.Quiz()
-    question = "Q1. What is technology will be used for project?"
+    question = "Q1. What is the agile methodology that will be used for project?"
     assert quiz.get_current_question(q_no=0) == question
 
 
@@ -137,16 +137,16 @@ def test_get_questions():
     quiz = logic.Quiz()
     quiz.get_questions()
     question = [
-        "Q1. What is technology will be used for project?",
+        "Q1. What is the agile methodology that will be used for project?",
         "Q2. Which methodology is the most traditional software development method?",
         "Q3. Which methodology is applicable to any project with aggressive deadline, complex requirements and a degree of uniqueness?",
         "Q4. Which development process that relies on the repetition of a very short development cycle, and testing?",
         "Q5. Which diagram shows the relationship between the user and the different use cases in which the use is involved?",
-        "Q6. When we need to quickly release software, which methodology we need to choose?",
-        "Q7. In scrum methodology, who define what the product releases?",
-        "Q8. When we want to decryption the fie, what state do we need to turn the data into?",
-        "Q9. Which tools is let the process of breaking down project deliverables into smaller, more manageable components?",
-        "Q10.What connects software and hardware?"
+        "Q6. When we need to quickly release software, which methodology do we choose?",
+        "Q7. In Scrum, who defines what and when the product releases?",
+        "Q8. When we want to decrypt a file, what state do we need to turn the data into?",
+        "Q9. Which tool let the process of breaking down project deliverables into smaller, more manageable components?",
+        "Q10. What connects software and hardware?"
     ]
     assert quiz.get_questions() == question
 
@@ -161,7 +161,6 @@ def test_get_options():
     * Then: Options should show
     '''
     quiz = variables.Variables()
-    quiz.get_options()
     options = [
         ["Kanban", "Kanban board", "Gantt chart", "Bar chart"],
         ["Waterfall methodology", "Scrum methodology", "Agile methodology", "RUP methodology"],
