@@ -121,7 +121,7 @@ def test_get_current_question():
     * Then: it should show question number 1
     '''
     quiz = logic.Quiz()
-    question = "Q1. What is technology will be used for project?"
+    question = "Q1. What will be agile methodology that would be used for this project?"
     assert quiz.get_current_question(q_no=0) == question
 
 
