@@ -38,7 +38,7 @@ jobs:
           - os: macos-latest
             TARGET: macos
             CMD_BUILD: >
-                pyinstaller -F --noconfirm --onefile --windowed --add-data="databases:databases" --add-data="images:images" gui.py && cd dist/ && zip -r9 psb-quiz-application gui.app/
+                pyinstaller -F --noconfirm --onefile --windowed --add-data="databases:databases" --add-data="images:images" gui.py && cd dist/ && ls && zip -r9 psb-quiz-application gui.app/
             OUT_FILE_NAME: psb-quiz-application.zip
             ASSET_MIME: application/zip
           - os: windows-latest
