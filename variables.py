@@ -56,6 +56,6 @@ class Variables:
         return self.answers
     
     def get_scores(self):
-        with open(self.resource_path('high_scores.txt'), 'r') as score_file:
+        with open(self.resource_path('databases/high_scores.txt'), 'r') as score_file:
              scores = score_file.readlines()
         return scores
