@@ -35,10 +35,10 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-latest
+          - os: macos-11
             TARGET: macos
             CMD_BUILD: >
-                python3 pyinstaller -F --noconfirm --onefile --windowed --add-data="databases:databases" --add-data="images:images" gui.py && cd dist/ && mv gui psb-quiz-application-mac
+                 pyinstaller -F --noconfirm --onefile --windowed --add-data="databases:databases" --add-data="images:images" gui.py && cd dist/ && mv gui psb-quiz-application-mac
             OUT_FILE_NAME: psb-quiz-application-mac
             ASSET_MIME: application/zip
           - os: windows-latest
