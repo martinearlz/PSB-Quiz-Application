@@ -38,13 +38,13 @@ jobs:
           - os: macos-latest
             TARGET: macos
             CMD_BUILD: >
-                pyinstaller -F --noconfirm --onefile --windowed --add-data="databases:databases" --add-data="images:images" gui.py && cd dist/ && zip -r9 psb-quiz-application gui.app/
-            OUT_FILE_NAME: psb-quiz-application.zip
+                pyinstaller -F --noconfirm --onefile --windowed --add-data="databases:databases" --add-data="images:images" gui.py && cd dist/ && zip -r9 psb-quiz-application-mac gui.app/
+            OUT_FILE_NAME: psb-quiz-application-mac.zip
             ASSET_MIME: application/zip
           - os: windows-latest
             TARGET: windows
-            CMD_BUILD: pyinstaller -F --noconfirm --onefile --windowed --add-data="databases;databases" --add-data="images;images" gui.py && cd dist && rename gui.exe psb-quiz-application.exe
-            OUT_FILE_NAME: psb-quiz-application.exe
+            CMD_BUILD: pyinstaller -F --noconfirm --onefile --windowed --add-data="databases;databases" --add-data="images;images" gui.py && cd dist && Rename-Item -Path "gui.exe" -NewName "psb-quiz-application-windows.exe"
+            OUT_FILE_NAME: psb-quiz-application-windows.exe
             ASSET_MIME: application/vnd.microsoft.portable-executable
     steps:
     - uses: actions/checkout@v1
