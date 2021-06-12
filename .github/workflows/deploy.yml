@@ -43,7 +43,7 @@ jobs:
             ASSET_MIME: application/zip
           - os: windows-latest
             TARGET: windows
-            CMD_BUILD: ls && cd ../ && pyinstaller -F --noconfirm --onefile --windowed --add-data="databases:databases" --add-data="images:images" gui.py && cd dist && rename gui.exe psb-quiz-application.exe
+            CMD_BUILD: ls && pyinstaller -F --noconfirm --onefile --windowed --add-data="databases:databases" --add-data="images:images" gui.py && cd dist && rename gui.exe psb-quiz-application.exe
             OUT_FILE_NAME: psb-quiz-application.exe
             ASSET_MIME: application/vnd.microsoft.portable-executable
     steps:
