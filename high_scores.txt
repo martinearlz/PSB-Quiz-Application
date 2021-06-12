@@ -4,3 +4,7 @@ zheng 40
 joy 40
 timothy 70
 timothy 0
+salman 0
+salman 0
+martin 40
+salman 0

@@ -1,8 +1,7 @@
 """This script stores global variables."""
-import json
 import os
-root_dir = os.path.abspath(os.path.dirname(__file__))
-
+import sys
+import json
 
 class Variables:
     def __init__(self):
@@ -10,13 +9,23 @@ class Variables:
         self.questions = ()
         self.options = ()
         self.answers = ()
+        
+    def resource_path(self, relative_path):
+        """ Get absolute path to resource, works for dev and for PyInstaller """
+        try:
+            # PyInstaller creates a temp folder and stores path in _MEIPASS
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
 
+        return os.path.join(base_path, relative_path)
+    
     def load_users(self):
-        with open(root_dir+"/databases/users.txt") as users:
+        with open(self.resource_path("databases/users.txt")) as users:
             for user in users:
                 (username, password) = user.split()
                 self.users[username] = password
-
+            
     def get_users(self):
         # Initialize the users dictionary if its empty.
         # If it's not empty, return the dict.
@@ -25,7 +34,7 @@ class Variables:
         return self.users
 
     def load_quiz(self):
-        with open(root_dir+"/databases/quiz.json") as quiz:
+        with open(self.resource_path("databases/quiz.json")) as quiz:
             data = json.load(quiz)
         self.questions = data['question']
         self.options = data['options']
@@ -47,6 +56,6 @@ class Variables:
         return self.answers
     
     def get_scores(self):
-        with open('high_scores', 'r') as score_file:
+        with open(self.resource_path('high_scores.txt'), 'r') as score_file:
              scores = score_file.readlines()
         return scores

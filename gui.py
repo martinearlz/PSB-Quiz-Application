@@ -5,10 +5,12 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from PIL import ImageTk, Image
 from logic import Logic, Quiz
+from variables import Variables
 from random import randint
 
 logic = Logic()
 quiz = Quiz()
+variables = Variables()
 colors = ["#233256", "#C00E32", "#F25022", "#00A4EF", "#7FBA00",
           "#FFB900", "#dd4540", "#7ab888", "#fbc633", "#740d2d", "#3ba194"]
 
@@ -114,14 +116,14 @@ class Login(tk.Frame):
 
         screen_width = self.controller.winfo_screenwidth()
 
-        top_wave = Image.open("images/top_wave.png")
+        top_wave = Image.open(variables.resource_path("images/top_wave.png"))
         top_wave = top_wave.resize((screen_width, 170), Image.ANTIALIAS)
         top_wave = ImageTk.PhotoImage(top_wave)
         self.top_wave_img = tk.Label(image=top_wave, background='#ffffff')
         self.top_wave_img.image = top_wave
         self.top_wave_img.place(relx=0, rely=0)
-
-        bottom_wave = Image.open("images/bottom_wave.png")
+        
+        bottom_wave = Image.open(variables.resource_path("images/bottom_wave.png"))
         bottom_wave = bottom_wave.resize((screen_width, 170), Image.ANTIALIAS)
         bottom_wave = ImageTk.PhotoImage(bottom_wave)
         self.bottom_wave_img = tk.Label(
