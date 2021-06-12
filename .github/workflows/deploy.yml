@@ -38,7 +38,7 @@ jobs:
           - os: macos-latest
             TARGET: macos
             CMD_BUILD: >
-                 xcode-select --install && brew update && FRMPTH="/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/python@3.8.rb"; rm $FRMPTH; wget -O $FRMPTH https://gist.github.com/iexa/2ac761bfd96ab78988b76c030d54a5b8/raw/python-with-tcl.rb && HOMEBREW_NO_AUTO_UPDATE=1 brew install --build-from-source python@3.8 && echo -n 'export PATH="/usr/local/opt/python/libexec/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc && echo -n 'export PATH="/usr/local/opt/python/libexec/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc && python -c "import tkinter; tkinter.Tcl().eval('info patchlevel') && pip install -r requirements.txt && pyinstaller -F --noconfirm --onefile --windowed --add-data="databases:databases" --add-data="images:images" gui.py && cd dist/ && mv gui psb-quiz-application-mac
+                 brew install python-tk@3.9 && echo -n 'export PATH="/usr/local/opt/python/libexec/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc && echo -n 'export PATH="/usr/local/opt/python/libexec/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc && pip install -r requirements.txt && pyinstaller -F --noconfirm --onefile --windowed --add-data="databases:databases" --add-data="images:images" gui.py && cd dist/ && mv gui psb-quiz-application-mac
             OUT_FILE_NAME: psb-quiz-application-mac
             ASSET_MIME: application/zip
           - os: windows-latest
