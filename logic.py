@@ -41,7 +41,7 @@ class Logic:
         return scores
     
     def save_user_score(self, score):
-        with open("high_scores.txt", "a+") as score_file:
+        with open(variables.resource_path("databases/high_scores.txt"), "a+") as score_file:
             score_file.write(f"{self.username} {score}\n")
 
 class Quiz:

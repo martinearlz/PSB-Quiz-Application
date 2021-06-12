@@ -38,12 +38,12 @@ jobs:
           - os: macos-latest
             TARGET: macos
             CMD_BUILD: >
-                pyinstaller -F --noconfirm --onefile --windowed --add-data "high_scores.txt:." --add-data="databases:databases" --add-data="images:images" gui.py && cd dist/ && zip -r9 psb-quiz-application gui.app/
+                pyinstaller -F --noconfirm --onefile --windowed --add-data="databases:databases" --add-data="images:images" gui.py && cd dist/ && zip -r9 psb-quiz-application gui.app/
             OUT_FILE_NAME: psb-quiz-application.zip
             ASSET_MIME: application/zip
           - os: windows-latest
             TARGET: windows
-            CMD_BUILD: pyinstaller -F --noconfirm --onefile --windowed --add-data "high_scores.txt:." --add-data="databases:databases" --add-data="images:images" gui.py && cd dist && rename gui.exe psb-quiz-application.exe
+            CMD_BUILD: pyinstaller -F --noconfirm --onefile --windowed --add-data="databases:databases" --add-data="images:images" gui.py && cd dist && rename gui.exe psb-quiz-application.exe
             OUT_FILE_NAME: psb-quiz-application.exe
             ASSET_MIME: application/vnd.microsoft.portable-executable
     steps:
