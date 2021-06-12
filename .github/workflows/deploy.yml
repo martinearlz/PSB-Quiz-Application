@@ -47,18 +47,17 @@ jobs:
             OUT_FILE_NAME: psb-quiz-application-windows.exe
             ASSET_MIME: application/vnd.microsoft.portable-executable
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Set up Python 3.8.5
       uses: actions/setup-python@v2
       with:
         python-version: 3.8.5
     - name: Install dependencies
       run: |
-          python3 -m pip install --upgrade pip
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
     - name: Print tkinter version
-      run: |
-          python3 tkinter_version.py
+      run: python tkinter_version.py
     - name: Build with pyinstaller for ${{matrix.TARGET}}
       run: ${{matrix.CMD_BUILD}}
     - name: Load Release URL File from release job
