@@ -203,7 +203,7 @@ class Dashboard(tk.Frame):
         tk.Label(self, text=f"CS PSB Quiz", font="Inter 30 bold",
                  background='#ffffff').place(relx=0.7, rely=0.24)
 
-        tk.Label(self, text=f"📗💻🖥️📘", font="Inter 70",
+        tk.Label(self, text=f"📗💻🖥️", font="Inter 70",
                  background='#ffffff').place(relx=0.66, rely=0.35)
 
         quiz_description = tk.Text(self, wrap="word", font="Inter", foreground="#000000", background='#ffffff',
