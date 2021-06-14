@@ -172,3 +172,31 @@ def test_get_options():
         ["database", "operation system", "kernel", "code"]
     ]
     assert quiz.get_options() == options
+   
+def test_variable():
+    '''
+    Gherkin Test Format:
+    * Scenario: variables are getting fetched from the database
+    * Given: I am launching the application
+    * When: When variables get populated from the database
+    * And: being fetch to the Control(logic.py) of the MVC architecture
+    * Then: it should be loaded correctly
+    '''
+    get_variables = variables.Variables()
+    load_variable = get_variables.get_users()
+    test_user = {'salman': 'pass', 'timothy': 'pass', 'joy': 'pass', 'martin': 'pass', 'zheng': 'pass'}
+    assert load_variable == test_user
+
+
+def test_login():
+  '''
+    Gherkin Test Format:
+    * Scenario: User wants to log in
+    * Given: User entered his redentials
+    * When: User submits his credentials and waititng for response from the application
+    * And: Application is fetching the response from the Control(logic.py)
+    * Then: It have to be fetched correctly.
+    '''
+    login_test = logic.Logic()
+    get_login = login_test.login("salman", "pass")
+    assert get_login is True
