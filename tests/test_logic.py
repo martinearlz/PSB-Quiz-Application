@@ -135,7 +135,6 @@ def test_get_questions():
     * Then: Questions should show
     '''
     quiz = logic.Quiz()
-    quiz.get_questions()
     question = [
         "Q1. What is the agile methodology that will be used for project?",
         "Q2. Which methodology is the most traditional software development method?",

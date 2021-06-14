@@ -3,6 +3,7 @@ import os
 import sys
 import json
 
+
 class Variables:
     def __init__(self):
         self.users = {}
