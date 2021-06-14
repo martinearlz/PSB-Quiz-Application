@@ -1,7 +1,6 @@
 from pathlib import Path
 import pytest
 import sys
-
 # Ensures that we can import stuff from the root folder.
 path = str(Path(Path(__file__).parent.absolute()).parent.absolute())
 sys.path.insert(0, path)
