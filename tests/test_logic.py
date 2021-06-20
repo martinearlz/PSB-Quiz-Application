@@ -189,7 +189,7 @@ def test_variable():
 
 
 def test_login():
-  '''
+    '''
     Gherkin Test Format:
     * Scenario: User wants to log in
     * Given: User entered his redentials
